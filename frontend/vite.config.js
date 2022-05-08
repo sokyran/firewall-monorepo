@@ -3,6 +3,7 @@ const { defineConfig } = require('vite')
 
 module.exports = defineConfig({
   build: {
+    outDir: '../backend/dist',
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),

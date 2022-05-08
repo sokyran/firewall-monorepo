@@ -6,6 +6,8 @@ const searchContainer = document.querySelector('#search-container');
 const searchResult = document.querySelector('#search-result');
 const searchInput = document.querySelector('#search-input');
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 searchButton.addEventListener('click', async () => {
   const searchValue = searchInput.value;
   window.location.replace('/posts/?query=' + searchValue);
@@ -31,12 +33,12 @@ const createPost = (post) => {
 }
 
 const loadPosts = async () => {
-  const { data } = await axios.get("http://localhost:8080/posts/");
+  const { data } = await axios.get(`${apiUrl}/posts`);
   data.forEach((post) => createPost(post));
 }
 
 const findPostsByText = async (text) => {
-  const { data } = await axios.post("http://localhost:8080/posts/search?query=" + text);
+  const { data } = await axios.post(`${apiUrl}/posts/search?query=${text}`);
   data.forEach((post) => createPost(post));
 };
 

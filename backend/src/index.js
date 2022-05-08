@@ -19,6 +19,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
+app.use('/assets', express.static('dist/assets'));
+
 // Custom Middleware
 
 const client = new Client()
@@ -32,10 +34,10 @@ app.use((req, res, next) => {
 });
 
 // * Routes * //
-
-app.use('/users', routes.user);
-app.use('/messages', routes.message);
-app.use('/posts', routes.posts);
+app.use('/', routes.views);
+app.use('/api/users', routes.user);
+app.use('/api/messages', routes.message);
+app.use('/api/posts', routes.posts);
 
 // * Start * //
 

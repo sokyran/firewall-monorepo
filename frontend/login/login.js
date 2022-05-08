@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const loginButton = document.querySelector('#login');
 const usernameInput = document.querySelector('#username');
 const passwordInput = document.querySelector('#password');
@@ -14,7 +16,7 @@ loginButton.addEventListener('click', async () => {
   };
 
   try {
-    const { data } = await axios.post('http://localhost:8080/users/login', body);
+    const { data } = await axios.post(`${apiUrl}/users/login`, body);
     const { accessToken } = data;
     console.log(accessToken);
     Cookies.set('token', accessToken, { expires: 7, path: '/' });
