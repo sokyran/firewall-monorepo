@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/index.css">
+  <title>Le Blog</title>
+</head>
+
+<body>
+  <div class="container h-100 d-flex">
+    <form class="d-flex flex-column m-auto" style="width: 400px">
+      <h2 class="text-center mb-3">Login</h2>
+      <div class="mb-2">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="name">
+      </div>
+      <div class="mb-2">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="password">
+      </div>
+      <button type="button" id="login" class="btn btn-primary m-auto w-100 mt-2">Log in</button>
+    </form>
+  </div>
+
+  <script type="module" src="./login.js"></script>
+</body>
+
+</html>

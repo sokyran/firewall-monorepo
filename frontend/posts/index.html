@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posts</title>
+  <link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <div class="container">
+    <p id="loading">Loading...</p>
+    <div class="mb-2 p-3 input-group">
+      <input type="text" class="form-control" id="search-input" placeholder="Search for posts...">
+      <button class="btn btn-primary" type="button" id="search-button">Search</button>
+    </div>
+    <div class="d-none p-3" id="search-container">
+      Search results for: <b id="search-result"></b>
+    </div>
+    <div id="posts" class="container p-3"></div>
+  </div>
+  <script type="module" src="/posts/posts.js"></script>
+</body>
+</html>
