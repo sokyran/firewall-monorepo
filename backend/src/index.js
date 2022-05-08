@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { Client } from 'pg'
 
-import models from './models';
 import routes from './routes';
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieParser())
 // Custom Middleware
 
 const client = new Client()
@@ -26,7 +26,6 @@ client.connect()
 
 app.use((req, res, next) => {
   req.context = {
-    models,
     client,
   };
   next();
@@ -36,6 +35,7 @@ app.use((req, res, next) => {
 
 app.use('/users', routes.user);
 app.use('/messages', routes.message);
+app.use('/posts', routes.posts);
 
 // * Start * //
 

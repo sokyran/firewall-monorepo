@@ -29,19 +29,6 @@ router.post('/', (req, res) => {
     userId: req.context.me.id,
   };
 
-  req.context.models.messages[id] = message;
-
-  return res.send(message);
-});
-
-router.delete('/:messageId', (req, res) => {
-  const {
-    [req.params.messageId]: message,
-    ...otherMessages
-  } = req.context.models.messages;
-
-  req.context.models.messages = otherMessages;
-
   return res.send(message);
 });
 
