@@ -16,13 +16,15 @@ loginButton.addEventListener('click', async () => {
   };
 
   try {
+    console.log(`${apiUrl}/users/login`);
     const { data } = await axios.post(`${apiUrl}/users/login`, body);
     const { accessToken } = data;
-    console.log(accessToken);
     Cookies.set('token', accessToken, { expires: 7, path: '/' });
     window.location.assign('/posts/');
   } catch(err) {
-    console.error(err);
+    if (err.response.data.error) {
+      return alert(err.response.data.error);
+    }
     alert(err.message);
   }
 });

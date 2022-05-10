@@ -1,8 +1,9 @@
 import axios from 'axios';
-import queryString from 'query-string';
+import parseQuery from '../utils/parse-query';
+import htmlSanitize from '../utils/html-sanitize';
 
-const searchButton = document.querySelector('#search-button');
 const searchContainer = document.querySelector('#search-container');
+const searchButton = document.querySelector('#search-button');
 const searchResult = document.querySelector('#search-result');
 const searchInput = document.querySelector('#search-input');
 
@@ -20,7 +21,7 @@ const createPost = (post) => {
     <div class="card mb-4 bg-light">
       <div class="card-header">Blog title</div>
       <div class="card-body">
-        <p class="card-text">${post.text}</a>
+        <p class="card-text">${htmlSanitize(post.text)}</a>
       </div>
       <div class="card-footer text-muted">
         <button class="btn btn-outline-primary">Comment</button>
@@ -43,9 +44,12 @@ const findPostsByText = async (text) => {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const parsed = queryString.parse(location.search);
+
+  const parsed = parseQuery(decodeURI(location.search));
+
   if (parsed.query) {
     searchContainer.classList.toggle('d-none');
+    console.log(parsed.query);
     searchResult.innerHTML = parsed.query;
     findPostsByText(parsed.query);
   } else {
