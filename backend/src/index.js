@@ -2,9 +2,15 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
+import fs from 'fs';
+import https from 'https';
 import { Client } from 'pg'
 
+const key = fs.readFileSync('../key.pem');
+const cert = fs.readFileSync('../cert.pem');
+
 import routes from './routes';
+import firewallMiddleware from './firewall';
 
 const app = express();
 
@@ -26,7 +32,7 @@ app.use('/assets', express.static('dist/assets'));
 const client = new Client()
 client.connect()
 
-app.use((req, res, next) => {
+app.use((req, _, next) => {
   req.context = {
     client,
   };
@@ -41,6 +47,7 @@ app.use('/api/posts', routes.posts);
 
 // * Start * //
 
-app.listen(process.env.PORT, () =>
-  console.log(`Example app listening on port ${process.env.PORT}!`),
+const server = https.createServer({key: key, cert: cert }, app);
+server.listen(process.env.PORT, () =>
+console.log(`Example app listening on port ${process.env.PORT}!`),
 );
