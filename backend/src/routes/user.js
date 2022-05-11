@@ -1,13 +1,8 @@
-import jwt from 'jsonwebtoken';
 import { Router } from 'express';
+import { generateAccessToken, getDataFromToken } from '../utils/jwt-utils';
 
 const router = Router();
 
-const SECRET = '09f26e402586e2faa8da4c98a35f1b20d6b033c6097befa8be3486a829587fe2f90a832bd3ff9d42710a4da095a2ce285b009f0c3730cd9b8e1af3eb84df6611';
-
-function generateAccessToken(username, password) {
-  return jwt.sign({username, password}, SECRET, { expiresIn: '1800s' });
-}
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
@@ -21,13 +16,35 @@ router.post('/login', async (req, res) => {
     if (user.rows[0].password !== password) {
       return res.status(401).send({ error: 'Password is incorrect' });
     }
-    const accessToken = generateAccessToken(username, password);
+    const { role, id: userId } = user.rows[0];
+    const accessToken = generateAccessToken(username, userId, role);
+
+    const temp = await getDataFromToken(accessToken);
+    console.log(temp)
+
     return res.send({ accessToken });
   } catch (error) {
     return res.status(400).send(`Error occured: '${error.message}'`)
   }
-
 });
+
+router.post('/check-token', async (req,res) => {
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res.sendStatus(401);
+  }
+
+  console.log(token);
+
+  const user = await getDataFromToken(token);
+  console.log(user);
+  if (!user) {
+    return res.status(401).send('user from token not extracted');
+  }
+  
+  return res.send(user);
+})
 
 router.post('/signup', async (req, res) => {
   const { client } = req.context;

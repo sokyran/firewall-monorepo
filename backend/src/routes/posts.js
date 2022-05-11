@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import {getDataFromToken} from '../utils/jwt-utils';
 
 const router = Router();
 
@@ -15,15 +16,24 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const { client } = req.context;
-  const { text, userId } = req.body;
+  const { cookies: { token } } = req;
+  const { text } = req.body;
 
-  if (!text || !userId) {
-    return res.status(500).send({ error: 'Text and userId are required' });
+  const user = await getDataFromToken(token);
+
+  if (!user) {
+    return res.sendStatus(403);
   }
+
+  if (!text) {
+    return res.status(500).send({ error: 'Text is required' });
+  }
+
+  const {userId} = user;
 
   const message = {
     text,
-    userId
+    userId,
   };
 
   const queryText = `INSERT INTO "public"."blog" ("text", "userId") VALUES 
