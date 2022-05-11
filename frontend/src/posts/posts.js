@@ -19,7 +19,7 @@ const createPost = (post) => {
   const postElement = document.createElement('div');
   const postHTML = `
     <div class="card mb-4 bg-light">
-      <div class="card-header">Blog title</div>
+      <div class="card-header">Blog title by <b>${post.name}</b></div>
       <div class="card-body">
         <p class="card-text">${htmlSanitize(post.text)}</a>
       </div>
@@ -39,6 +39,7 @@ const loadPosts = async () => {
 }
 
 const findPostsByText = async (text) => {
+
   const { data } = await axios.post(`${apiUrl}/posts/search?query=${text}`);
   data.forEach((post) => createPost(post));
 };
@@ -49,8 +50,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (parsed.query) {
     searchContainer.classList.toggle('d-none');
-    console.log(parsed.query);
+
     searchResult.innerHTML = parsed.query;
+
     findPostsByText(parsed.query);
   } else {
     await loadPosts();

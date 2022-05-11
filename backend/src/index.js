@@ -42,7 +42,6 @@ app.use((req, _, next) => {
 // * Routes * //
 app.use('/', routes.views);
 app.use('/api/users', routes.user);
-app.use('/api/messages', routes.message);
 app.use('/api/posts', routes.posts);
 
 // * Start * //

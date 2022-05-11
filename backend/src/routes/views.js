@@ -5,12 +5,16 @@ const router = Router();
 
 const asset = (file) => path.join(__dirname, file);
 
-router.get('/', (req, res) => {
+router.get('/', (_, res) => {
   res.sendFile(asset('../../dist/index.html'));
 });
 
-router.get('/login',(req, res) => {
+router.get('/login',(_, res) => {
   res.sendFile(asset('../../dist/login/index.html'));
-})
+});
+
+router.get('/posts',(_, res) => {
+  res.sendFile(asset('../../dist/posts/index.html'));
+});
 
 export default router;

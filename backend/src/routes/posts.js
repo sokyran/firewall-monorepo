@@ -4,8 +4,12 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   const { client } = req.context;
+  const queryText = `
+    SELECT "text", "name" from "public"."blog"
+      INNER JOIN "public"."users"
+      ON "public"."users"."id" = "public"."blog"."userId";`
 
-  const posts = await client.query('SELECT * FROM "public"."blog"');
+  const posts = await client.query(queryText);
   return res.send(posts.rows);
 });
 
@@ -36,6 +40,7 @@ router.post('/', async (req, res) => {
 router.post('/search', async (req, res) => {
   const { client } = req.context;
   const { query } = req.query;
+
   const foundPosts = await client.query(`SELECT * FROM "public"."blog" where "text" ILIKE '%${query}%'`);
   return res.send(foundPosts.rows);
 });
