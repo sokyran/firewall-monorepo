@@ -12,7 +12,6 @@ const getDataFromToken = async (token) => {
 }
 
 const generateAccessToken = (username, userId, role) => {
-  console.log(userId);
   return jwt.sign({username, userId, role}, SECRET, { expiresIn: '1800m' });
 }
 

@@ -32,12 +32,10 @@ router.post('/check-token', async (req,res) => {
     return res.sendStatus(401);
   }
 
-  console.log(token);
-
   const user = await getDataFromToken(token);
-  console.log(user);
+
   if (!user) {
-    return res.status(401).send('user from token not extracted');
+    return res.status(401).send('User was not extracted from token');
   }
   
   return res.send(user);
