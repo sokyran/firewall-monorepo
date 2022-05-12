@@ -3,14 +3,16 @@ import cors from 'cors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import fs from 'fs';
+import path from 'path';
 import https from 'https';
 import { Client } from 'pg'
+
+import routes from './routes';
+import firewallMiddleware from './utils/firewall';
 
 const key = fs.readFileSync('../key.pem');
 const cert = fs.readFileSync('../cert.pem');
 
-import routes from './routes';
-import firewallMiddleware from './firewall';
 
 const app = express();
 
@@ -26,6 +28,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use('/assets', express.static('dist/assets'));
+
+// Views middleware
+
+app.set('views', path.join(__dirname, './views'));
+app.set('view engine', 'ejs');
 
 // Custom Middleware
 

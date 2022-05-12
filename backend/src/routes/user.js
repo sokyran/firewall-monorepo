@@ -19,9 +19,6 @@ router.post('/login', async (req, res) => {
     const { role, id: userId } = user.rows[0];
     const accessToken = generateAccessToken(username, userId, role);
 
-    const temp = await getDataFromToken(accessToken);
-    console.log(temp)
-
     return res.send({ accessToken });
   } catch (error) {
     return res.status(400).send(`Error occured: '${error.message}'`)
