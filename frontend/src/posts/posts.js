@@ -1,11 +1,16 @@
 import axios from 'axios';
 import parseQuery from '../utils/parse-query';
 import htmlSanitize from '../utils/html-sanitize';
+import Cookies from 'js-cookie';
 
 const searchContainer = document.querySelector('#search-container');
 const searchButton = document.querySelector('#search-button');
+const postButton = document.querySelector('#post-button');
 const searchResult = document.querySelector('#search-result');
 const searchInput = document.querySelector('#search-input');
+const usernamePlace = document.querySelector('#username-place');
+const textArea = document.querySelector('#text-area');
+const posts = document.querySelector('#posts');
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -14,8 +19,23 @@ searchButton.addEventListener('click', async () => {
   window.location.replace('/posts/?query=' + searchValue);
 });
 
-const createPost = (post) => {
-  const posts = document.querySelector('#posts');
+postButton.addEventListener('click', async () => {
+  const { value } = textArea;
+
+  if (value.length > 0) {
+    const { data } = await axios.post(`${apiUrl}/posts`, { text: value });
+    textArea.value = '';
+    renderPost({name: data.username, text: value});
+  } else {
+    alert('You need to write something');
+  }
+});
+
+const renderPost = (post) => {
+  if (!post || !post.name || !post.text) {
+    return alert('Not valid post');
+  }
+
   const postElement = document.createElement('div');
   const postHTML = `
     <div class="card mb-4 bg-light">
@@ -30,19 +50,31 @@ const createPost = (post) => {
     `;
 
   postElement.innerHTML = postHTML;
-  posts.append(postElement);
+  posts.prepend(postElement);
 }
 
 const loadPosts = async () => {
   const { data } = await axios.get(`${apiUrl}/posts`);
-  data.forEach((post) => createPost(post));
+  data.forEach((post) => renderPost(post));
 }
 
 const findPostsByText = async (text) => {
-
   const { data } = await axios.post(`${apiUrl}/posts/search?query=${text}`);
-  data.forEach((post) => createPost(post));
+  data.forEach((post) => renderPost(post));
 };
+
+const getUser = async () => {
+  const token = Cookies.get('token');
+
+  try {
+    const { data } = await axios.post(`${apiUrl}/users/check-token`, { token });
+    usernamePlace.innerHTML = data.username;
+    console.log(data);
+  } catch(err) {
+    console.error(err);
+    alert('Something went wrong', err.message);
+  }
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   const parsed = parseQuery(decodeURI(location.search));
@@ -54,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     findPostsByText(parsed.query);
   } else {
+    await getUser();
     await loadPosts();
   }
 

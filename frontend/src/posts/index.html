@@ -14,9 +14,19 @@
       <input type="text" class="form-control" id="search-input" placeholder="Search for posts...">
       <button class="btn btn-primary" type="button" id="search-button">Search</button>
     </div>
+
     <div class="d-none p-3" id="search-container">
       Search results for: <b id="search-result"></b>
     </div>
+
+    <section class="bg-primary text-white m-3 p-4 w-50 mx-auto row" style="border-radius: 10px;">
+      <h3 class="fs-5 fw-light px-0">Hi, <span class="fw-bold" id="username-place"></span>! What's on your mind?</h3>
+      <div class="m-0 my-2 px-0">
+        <textarea rows="4" class="form-control" id="text-area" style="resize: none;"></textarea>
+      </div>
+      <button class="btn btn-light w-25 mt-2" style="margin-left: auto;" type="button" id="post-button">Send</button>
+    </section>
+
     <div id="posts" class="container p-3"></div>
   </div>
   <script type="module" src="/posts/posts.js"></script>
