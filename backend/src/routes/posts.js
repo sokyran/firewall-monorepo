@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {getDataFromToken} from '../utils/jwt-utils';
+import { getDataFromToken } from '../utils/jwt-utils';
 
 const router = Router();
 
@@ -8,7 +8,8 @@ router.get('/', async (req, res) => {
   const queryText = `
     SELECT "text", "name" from "public"."blog"
       INNER JOIN "public"."users"
-      ON "public"."users"."id" = "public"."blog"."userId";`
+      ON "public"."users"."id" = "public"."blog"."userId"
+      ORDER BY "public"."blog"."id" ASC;`
 
   const posts = await client.query(queryText);
   return res.send(posts.rows);
@@ -29,11 +30,12 @@ router.post('/', async (req, res) => {
     return res.status(500).send({ error: 'Text is required' });
   }
 
-  const {userId} = user;
+  const { userId, username } = user;
 
   const message = {
     text,
     userId,
+    username,
   };
 
   const queryText = `INSERT INTO "public"."blog" ("text", "userId") VALUES 
