@@ -46,6 +46,8 @@ app.use((req, _, next) => {
   next();
 });
 
+app.use(firewallMiddleware);
+
 // * Routes * //
 app.use('/', routes.views);
 app.use('/api/users', routes.user);
@@ -54,6 +56,7 @@ app.use('/api/posts', routes.posts);
 // * Start * //
 
 const server = https.createServer({key: key, cert: cert }, app);
+
 server.listen(process.env.PORT, () =>
-console.log(`Example app listening on port ${process.env.PORT}!`),
+  console.log(`Example app listening on port ${process.env.PORT}!`),
 );
