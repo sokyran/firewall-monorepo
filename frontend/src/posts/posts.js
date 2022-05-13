@@ -45,7 +45,6 @@ const findPostsByText = async (text) => {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-
   const parsed = parseQuery(decodeURI(location.search));
 
   if (parsed.query) {

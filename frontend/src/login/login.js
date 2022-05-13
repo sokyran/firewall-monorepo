@@ -16,8 +16,7 @@ loginButton.addEventListener('click', async () => {
   };
 
   try {
-    const { data } = await axios.post(`${apiUrl}/users/login`, body);
-    const { accessToken } = data;
+    const { data: { accessToken } } = await axios.post(`${apiUrl}/users/login`, body);
     Cookies.set('token', accessToken, { expires: 7, path: '/' });
     window.location.assign('/posts/');
   } catch(err) {
