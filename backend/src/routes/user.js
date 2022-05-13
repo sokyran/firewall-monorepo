@@ -42,6 +42,7 @@ router.post('/check-token', async (req,res) => {
 });
 
 router.post('/csrf-token', async (req, res) => {
+  const { client } = req.context;
   const { token } = req.cookies;
 
   if (!token) {
@@ -54,8 +55,10 @@ router.post('/csrf-token', async (req, res) => {
     return res.status(401).send('User was not extracted from token');
   }
 
-  const { id: userId } = user;
+  const { userId } = user;
   const csrfToken = genereateCsrfToken(userId);
+
+  await client.query(`UPDATE "public"."users" SET "csrf_token" = '${csrfToken}' WHERE "id" = '${userId}';`)  
 
   return res.send({ csrfToken });
 });
