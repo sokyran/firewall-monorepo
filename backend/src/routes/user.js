@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { generateAccessToken, getDataFromToken } from '../utils/jwt-utils';
+import { generateAccessToken, genereateCsrfToken, getDataFromToken } from '../utils/jwt-utils';
 
 const router = Router();
 
@@ -39,7 +39,26 @@ router.post('/check-token', async (req,res) => {
   }
   
   return res.send(user);
-})
+});
+
+router.post('/csrf-token', async (req, res) => {
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res.sendStatus(401);
+  }
+
+  const user = await getDataFromToken(token);
+
+  if (!user) {
+    return res.status(401).send('User was not extracted from token');
+  }
+
+  const { id: userId } = user;
+  const csrfToken = genereateCsrfToken(userId);
+
+  return res.send({ csrfToken });
+});
 
 router.post('/signup', async (req, res) => {
   const { client } = req.context;
