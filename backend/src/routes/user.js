@@ -19,9 +19,11 @@ router.post('/login', async (req, res) => {
     const { role, id: userId } = user.rows[0];
     const accessToken = generateAccessToken(username, userId, role);
 
-    return res.send({ accessToken });
+    res.cookie('token', accessToken, { maxAge: 900000, httpOnly: true, secure: true, sameSite: true });
+
+    return res.sendStatus(200);
   } catch (error) {
-    return res.status(400).send(`Error occured: '${error.message}'`)
+    return res.status(400).send(`Error occured: '${error.message}'`);
   }
 });
 

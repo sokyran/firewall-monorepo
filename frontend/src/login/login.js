@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -16,8 +15,7 @@ loginButton.addEventListener('click', async () => {
   };
 
   try {
-    const { data: { accessToken } } = await axios.post(`${apiUrl}/users/login`, body);
-    Cookies.set('token', accessToken, { expires: 7, path: '/' });
+    await axios.post(`${apiUrl}/users/login`, body);
     window.location.assign('/posts/');
   } catch(err) {
     if (err.response.data.error) {

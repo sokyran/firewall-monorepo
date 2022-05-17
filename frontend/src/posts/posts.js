@@ -1,7 +1,6 @@
 import axios from 'axios';
 import parseQuery from '../utils/parse-query';
 import htmlSanitize from '../utils/html-sanitize';
-import Cookies from 'js-cookie';
 
 const searchContainer = document.querySelector('#search-container');
 const searchButton = document.querySelector('#search-button');
@@ -66,10 +65,8 @@ const findPostsByText = async (text) => {
 };
 
 const getUser = async () => {
-  const token = Cookies.get('token');
-
   try {
-    const { data } = await axios.post(`${apiUrl}/users/check-token`, { token });
+    const { data } = await axios.post(`${apiUrl}/users/check-token`);
     usernamePlace.innerHTML = data.username;
   } catch (err) {
     console.error(err);

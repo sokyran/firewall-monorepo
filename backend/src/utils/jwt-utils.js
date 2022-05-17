@@ -12,7 +12,7 @@ const getDataFromToken = async (token) => {
 }
 
 const generateAccessToken = (username, userId, role) => {
-  return jwt.sign({username, userId, role}, SECRET, { expiresIn: '1800m' });
+  return jwt.sign({username, userId, role}, SECRET);
 }
 
 const genereateCsrfToken = (userId) => {
