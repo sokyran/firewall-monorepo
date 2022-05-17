@@ -59,7 +59,11 @@ router.post('/search', async (req, res) => {
   const { client } = req.context;
   const { query } = req.query;
 
-  const foundPosts = await client.query(`SELECT * FROM "public"."blog" where "text" ILIKE '%${query}%'`);
+  const foundPosts = await client.query(`
+    SELECT * FROM "public"."blog"
+    INNER JOIN "public"."users"
+    ON "public"."users"."id" = "public"."blog"."userId"
+    WHERE "text" ILIKE '%${query}%'`);
   return res.send(foundPosts.rows);
 });
 
