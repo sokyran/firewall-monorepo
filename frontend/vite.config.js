@@ -13,7 +13,7 @@ module.exports = defineConfig({
         login: resolve(__dirname, 'src/login/index.html'),
       },
       output: {
-        assetFileNames: `assets/[name].[ext]`,
+        assetFileNames: `assets/index.[ext]`,
       }
     }
   },
