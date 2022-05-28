@@ -11,6 +11,7 @@ module.exports = defineConfig({
         main: resolve(__dirname, 'src/index.html'),
         posts: resolve(__dirname, 'src/posts/index.html'),
         login: resolve(__dirname, 'src/login/index.html'),
+        dashboard: resolve(__dirname, 'src/dashboard/index.html'),
       },
       output: {
         assetFileNames: `assets/index.[ext]`,

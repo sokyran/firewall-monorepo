@@ -17,4 +17,8 @@ router.get('/posts',(_, res) => {
   res.sendFile(asset('../../dist/posts/index.html'));
 });
 
+router.get('/dashboard',(_, res) => {
+  res.sendFile(asset('../../dist/dashboard/index.html'));
+});
+
 export default router;

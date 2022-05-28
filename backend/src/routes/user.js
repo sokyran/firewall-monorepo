@@ -3,6 +3,15 @@ import { generateAccessToken, genereateCsrfToken, getDataFromToken } from '../ut
 
 const router = Router();
 
+router.get('/', async (req, res) => {
+  const { client } = req.context;
+  try {
+    const users = await client.query(`SELECT * FROM "public"."users";`);
+    res.send(users.rows);
+  } catch (error) {
+    return res.status(400).send(`Error occured: '${error.message}'`);
+  }
+})
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
