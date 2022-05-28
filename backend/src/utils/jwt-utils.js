@@ -16,7 +16,7 @@ const generateAccessToken = (username, userId, role) => {
 }
 
 const genereateCsrfToken = (userId) => {
-  return jwt.sign({userId}, SECRET, { expiresIn: '20m' });
+  return jwt.sign({userId}, SECRET, { expiresIn: '24h' });
 }
 
 export {
