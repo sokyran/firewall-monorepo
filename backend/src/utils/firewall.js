@@ -5,23 +5,19 @@ const firewallConfig = [
     route: '/',
     isAuthNeeded: false,
     acceptedRoles: ['user', 'admin'],
-  },
-  {
+  }, {
     route: '/login',
     isAuthNeeded: false,
     acceptedRoles: ['user', 'admin'],
-  },
-  {
+  }, {
     route: '/posts',
     isAuthNeeded: true,
     acceptedRoles: ['user', 'admin'],
-  },
-  {
+  }, {
     route: '/dashboard',
     isAuthNeeded: true,
     acceptedRoles: ['admin'],
-  },
-];
+  }];
 
 const firewallMiddlewre = async (req, res, next) => {
   const renderError = (error) => {
@@ -47,7 +43,7 @@ const firewallMiddlewre = async (req, res, next) => {
 
     if (token == null) return renderError('You are not authorized');
 
-    const user = await getDataFromToken(token)
+    const user = await getDataFromToken(token);
 
     if (user === null) {
       return renderError('Could not extract user from token');

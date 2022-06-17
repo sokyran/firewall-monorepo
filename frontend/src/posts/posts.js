@@ -24,7 +24,11 @@ postButton.addEventListener('click', async () => {
   const { value } = textArea;
 
   if (value.length > 0) {
-    const { data } = await axios.post(`${apiUrl}/posts`, { text: value }, { headers: { 'X-CSRF-TOKEN': csrfToken } });
+    const { data } = await axios.post(
+      `${apiUrl}/posts`, { text: value }, 
+        { headers: { 'X-CSRF-TOKEN': csrfToken } 
+      }
+    );
     textArea.value = '';
     renderPost({ name: data.username, text: value });
   } else {

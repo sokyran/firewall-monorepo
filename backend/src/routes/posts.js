@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
   const { text } = req.body;
 
   const user = await getDataFromToken(token);
+
   const userFromToken = await getDataFromToken(csrfToken);
 
   if (!userFromToken || user.id !== userFromToken.id) {

@@ -28,7 +28,12 @@ router.post('/login', async (req, res) => {
     const { role, id: userId } = user.rows[0];
     const accessToken = generateAccessToken(username, userId, role);
 
-    res.cookie('token', accessToken, { maxAge: 900000, httpOnly: true, secure: true, sameSite: true });
+    res.cookie('token', accessToken, {
+      maxAge: 900000, 
+      httpOnly: true, 
+      secure: true, 
+      sameSite: true,
+    });
 
     return res.sendStatus(200);
   } catch (error) {
