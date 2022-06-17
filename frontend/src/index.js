@@ -6,6 +6,8 @@ const usernamePlace = document.querySelector('#username-place');
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
+axios.defaults.withCredentials = true;
+
 document.addEventListener('DOMContentLoaded', async () => {
   if (!window.location.pathname.endsWith('/')) {
     window.location.replace(window.location.pathname + '/');

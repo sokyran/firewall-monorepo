@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

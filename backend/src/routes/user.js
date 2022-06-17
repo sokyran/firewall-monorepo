@@ -74,7 +74,9 @@ router.post('/csrf-token', async (req, res) => {
   const { userId } = user;
   const csrfToken = genereateCsrfToken(userId);
 
-  await client.query(`UPDATE "public"."users" SET "csrf_token" = '${csrfToken}' WHERE "id" = '${userId}';`)  
+  await client.query(
+    `UPDATE "public"."users" SET "csrf_token" = $1 WHERE "id" = $2;`, [csrfToken, userId]
+  );  
 
   return res.send({ csrfToken });
 });
