@@ -4,6 +4,17 @@ axios.defaults.withCredentials = true;
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const tableBody = document.querySelector('.table > tbody');
+const usernamePlace = document.querySelector('#username-place');
+
+const getUser = async () => {
+  try {
+    const { data } = await axios.post(`${apiUrl}/users/check-token`);
+    usernamePlace.innerHTML = data.username;
+  } catch (err) {
+    console.error(err);
+    alert('Something went wrong', err.message);
+  }
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -12,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const userRow = createRow(user);
       tableBody.appendChild(userRow);
     })
+    await getUser();
   } catch(err) {
     console.error(err);
   }
