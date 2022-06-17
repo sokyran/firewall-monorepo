@@ -81,9 +81,12 @@ const getUser = async () => {
 document.addEventListener('DOMContentLoaded', async () => {
   const parsed = parseQuery(decodeURI(location.search));
 
-  const { data } = await axios.post(`${apiUrl}/users/csrf-token`);
-  csrfToken = data.csrfToken;
-
+  try {
+    const { data } = await axios.post(`${apiUrl}/users/csrf-token`);
+    csrfToken = data.csrfToken; 
+  } catch(e) {
+    console.log('error with token', e.message);
+  }
   if (parsed.query) {
     searchContainer.classList.toggle('d-none');
 
