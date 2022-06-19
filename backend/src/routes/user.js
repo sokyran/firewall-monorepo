@@ -81,31 +81,4 @@ router.post('/csrf-token', async (req, res) => {
   return res.send({ csrfToken });
 });
 
-router.post('/signup', async (req, res) => {
-  const { client } = req.context;
-  const { name, password, role } = req.body;
-  try {
-    const user = await client.query(`SELECT * FROM "public"."users" where "name" = '${name}';`);
-    if (user.rows.length > 0) {
-      return res.status(400).send({ error: 'User already exists' });
-    }
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-
-  const newUser = {
-    name,
-    password,
-    role: 'user',
-  };
-  try {
-    const text = `INSERT INTO "public"."users" ("name", "password", "role") VALUES 
-        ('${name}', '${password}', '${role}');`
-    await client.query(text);
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-  return res.send(newUser);
-});
-
 export default router;
