@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
   const { client } = req.context;
 
   try {
-    const user = await client.query(`SELECT * FROM "public"."users" WHERE NAME = $1;`, [username]);
+    const user = await client.query(`SELECT * FROM "public"."users" WHERE NAME = '${username}';`);
     if (user.rows.length === 0) {
       return res.status(401).send({ error: 'User not found' });
     }
