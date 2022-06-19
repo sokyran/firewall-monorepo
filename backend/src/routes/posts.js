@@ -23,11 +23,11 @@ router.post('/', async (req, res) => {
 
   const user = await getDataFromToken(token);
 
-  const userFromToken = await getDataFromToken(csrfToken);
+  // const userFromToken = await getDataFromToken(csrfToken);
 
-  if (!userFromToken || user.id !== userFromToken.id) {
-    return res.status(401).send('Data from token is not valid');
-  }
+  // if (!userFromToken || user.id !== userFromToken.id) {
+  //   return res.status(401).send('Data from token is not valid');
+  // }
 
   if (!user) {
     return res.sendStatus(403);
