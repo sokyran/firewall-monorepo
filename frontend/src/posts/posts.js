@@ -46,7 +46,7 @@ const renderPost = (post) => {
     <div class="card mb-4 bg-light">
       <div class="card-header">Blog title by <b>${post.name}</b></div>
       <div class="card-body">
-        <p class="card-text">${htmlSanitize(post.text)}</a>
+        <p class="card-text">${(post.text)}</a>
       </div>
       <div class="card-footer text-muted">
         <button class="btn btn-outline-primary">Comment</button>
