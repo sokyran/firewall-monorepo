@@ -6,7 +6,7 @@ const parseQuery = (queryString) => {
   for (let i = 0; i < pairs.length; i++) {
       let [param, ...rest] = pairs[i].split('=')
       let value = rest.join('=')
-      query[param] = (value || '');
+      query[param] = (htmlSanitize(value) || '');
   }
   return query;
 };
