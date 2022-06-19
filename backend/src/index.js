@@ -46,7 +46,7 @@ app.use((req, _, next) => {
   next();
 });
 
-app.use(firewallMiddleware);
+// app.use(firewallMiddleware);
 
 // * Routes * //
 app.use('/', routes.views);
